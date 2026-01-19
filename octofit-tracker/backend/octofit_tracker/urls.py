@@ -32,12 +32,15 @@ router.register(r'leaderboards', LeaderboardViewSet)
 
 @api_view(['GET'])
 def api_root(request, format=None):
+    import os
+    codespace_name = os.environ.get('CODESPACE_NAME', 'localhost')
+    base_url = f"https://{codespace_name}-8000.app.github.dev/api/"
     return Response({
-        'teams': reverse('team-list', request=request, format=format),
-        'users': reverse('user-list', request=request, format=format),
-        'activities': reverse('activity-list', request=request, format=format),
-        'workouts': reverse('workout-list', request=request, format=format),
-        'leaderboards': reverse('leaderboard-list', request=request, format=format),
+        'teams': base_url + 'teams/',
+        'users': base_url + 'users/',
+        'activities': base_url + 'activities/',
+        'workouts': base_url + 'workouts/',
+        'leaderboards': base_url + 'leaderboards/',
     })
 
 urlpatterns = [
